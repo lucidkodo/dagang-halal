@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia';
 import { User } from '../models/User';
 
-const currentUser: User | null = null;
-
 // get current user object from store
 export const useCurrentUserStore = defineStore('currentUser', {
   state: () => ({
-    currentUser,
+    currentUser: null as User | null,
   }),
   getters: {
     message: (piniaState) => {
@@ -15,6 +13,11 @@ export const useCurrentUserStore = defineStore('currentUser', {
       }
 
       return 'please log in';
+    },
+  },
+  actions: {
+    setCurrentUser(user: User) {
+      this.currentUser = user;
     },
   },
 });
