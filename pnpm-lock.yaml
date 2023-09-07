@@ -18,8 +18,8 @@ dependencies:
     specifier: ^3.2.47
     version: 3.3.4
   vue-router:
-    specifier: '4'
-    version: 4.0.0(vue@3.3.4)
+    specifier: 4.0.3
+    version: 4.0.3(vue@3.3.4)
 
 devDependencies:
   '@quasar/vite-plugin':
@@ -2111,8 +2111,8 @@ packages:
       - supports-color
     dev: true
 
-  /vue-router@4.0.0(vue@3.3.4):
-    resolution: {integrity: sha512-RiAsDsSV73TBqppgpAKghb5exHHKsFuTii7hbhj9QHjWJNDE4lBDTr7bVALG9DH9vVcFI+7PUTBGYbytBFsWsQ==}
+  /vue-router@4.0.3(vue@3.3.4):
+    resolution: {integrity: sha512-AD1OjtVPyQHTSpoRsEGfPpxRQwhAhxcacOYO3zJ3KNkYP/r09mileSp6kdMQKhZWP2cFsPR3E2M3PZguSN5/ww==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
