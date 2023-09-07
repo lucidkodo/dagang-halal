@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { OrgRoute } from '../routes';
 import api from '../../helpers/api';
 import { User } from '../../models/User';
 
@@ -20,7 +21,7 @@ async function onSubmit() {
   );
 
   if (user) {
-    router.push({ name: 'Organizations' });
+    router.push(OrgRoute);
   } else {
     loginFailed.value = true;
   }

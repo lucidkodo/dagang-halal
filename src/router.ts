@@ -1,21 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Login from './pages/Login.vue';
-import Organizations from './pages/organizations/index.vue';
+import { LoginRoute, OrgRoute } from './routes';
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'Organizations',
-      component: Organizations,
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login,
-    },
-  ],
+  routes: [LoginRoute, OrgRoute],
 });
 
 export default router;
