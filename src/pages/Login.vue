@@ -4,10 +4,13 @@ import { useRouter } from 'vue-router';
 import { OrgRoute } from '../routes';
 import api from '../../helpers/api';
 import { User } from '../../models/User';
+import { useCurrentUserStore } from '../store';
 
 const router = useRouter();
+const store = useCurrentUserStore();
 
 // Ref: https://www.w3resource.com/javascript/form/email-validation.php
+// There isn't a "perfect" regex for checking email.
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const email = ref<string>('');
@@ -20,7 +23,26 @@ async function onSubmit() {
     password.value
   );
 
+  /**
+   * Debate:
+   *
+   * Should we reveal if an email is not tied to a user account?
+   */
+
   if (user) {
+    // password REALLY shouldn't be here
+    // delete user.password;
+    store.setCurrentUser(user);
+
+    /**
+     * With "const { currentUser } = store;",
+     * we could dynamically read variable name using
+     * Object.keys({ currentUser })[0]
+     *
+     * And because we're only reading the variable/key name,
+     * "storeToRefs" is not needed.
+     */
+    localStorage.setItem('currentUser', JSON.stringify(user));
     router.push(OrgRoute);
   } else {
     loginFailed.value = true;
