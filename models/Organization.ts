@@ -8,3 +8,7 @@ export interface Organization {
   createBy: number;
   createTimestamp: string;
 }
+
+export type OrganizationWithCreatorName = Organization & {
+  creatorName: string;
+};

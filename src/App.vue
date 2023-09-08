@@ -47,5 +47,10 @@ if (currentUser.value === null && localStorageUser) {
 
 <template>
   <Navbar v-if="isLoggedIn" />
-  <router-view />
+  <Suspense>
+    <router-view />
+    <template #fallback>
+      <i>Loading...</i>
+    </template>
+  </Suspense>
 </template>
