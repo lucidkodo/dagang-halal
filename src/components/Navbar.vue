@@ -26,10 +26,7 @@ function logout() {
       </li>
     </ul>
     <div class="btnControl">
-      <q-btn no-caps color="green">
-        <span class="addBtn">&#43;</span>
-        Add organization
-      </q-btn>
+      <q-btn no-caps icon="add" color="green"> Add organization </q-btn>
       <q-btn no-caps color="grey" @click="logout">Logout</q-btn>
     </div>
   </nav>
@@ -73,13 +70,6 @@ nav {
   .btnControl {
     button + button {
       margin-left: 15px;
-    }
-
-    button {
-      .addBtn {
-        font-weight: bold;
-        margin-right: 8px;
-      }
     }
   }
 }
