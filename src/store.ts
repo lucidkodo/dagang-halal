@@ -17,7 +17,15 @@ export const useCurrentUserStore = defineStore('currentUser', {
   },
   actions: {
     setCurrentUser(user: User) {
+      /**
+       * validations can be added here
+       * to catch runtime errors.
+       */
       this.currentUser = user;
+    },
+
+    clearCurrentUser() {
+      this.currentUser = null;
     },
   },
 });
