@@ -113,6 +113,17 @@ function goToDetailsPage(row: Organization) {
   });
 }
 
+function deleteOrganization(orgId: number) {
+  const orgIndex = store.organizations.findIndex((o) => o.id === orgId);
+  if (orgIndex === -1) {
+    // TODO: add error handling
+    return;
+  }
+
+  // or replace with api call
+  store.organizations.splice(orgIndex, 1);
+}
+
 // use mock data when there's no data
 if (store.organizations.length === 0) {
   store.setOrganizations(mockData);
@@ -148,9 +159,11 @@ if (store.organizations.length === 0) {
               class="edit"
               @click="goToDetailsPage(props.row)"
             />
-            <a :href="'#delete-' + props.row.id">
-              <q-icon name="delete" class="delete" />
-            </a>
+            <q-icon
+              name="delete"
+              class="delete"
+              @click="deleteOrganization(props.row.id)"
+            />
           </q-td>
         </q-tr>
       </template>
@@ -159,7 +172,7 @@ if (store.organizations.length === 0) {
 </template>
 <style lang="scss" scoped>
 .actionBtns {
-  a + a {
+  i + i {
     margin-left: 10px;
   }
 }

@@ -10,6 +10,10 @@ const pageTitle = computed(() => {
   return router.currentRoute.value.name;
 });
 
+function goToNewOrgPage() {
+  router.push(NewOrgRoute);
+}
+
 function logout() {
   localStorage.clear();
   store.clearCurrentUser();
@@ -29,13 +33,21 @@ function logout() {
       </li>
     </ul>
     <div class="btnControl">
-      <q-btn no-caps icon="add" color="green"> Add organization </q-btn>
+      <q-btn no-caps icon="add" color="green" @click="goToNewOrgPage">
+        Add organization
+      </q-btn>
       <q-btn no-caps color="grey" @click="logout">Logout</q-btn>
     </div>
   </nav>
 </template>
 
 <style lang="scss" scoped>
+@media (min-width: 200px) and (max-width: 600px) {
+  nav {
+    flex-direction: column;
+  }
+}
+
 nav {
   width: 100%;
   padding: 15px 0;

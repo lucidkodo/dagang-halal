@@ -58,6 +58,11 @@ function clearSubmitState() {
     loginFailed.value = false;
   }
 }
+
+// redirect user when session is found
+if (store.currentUser !== null) {
+  router.push(OrgRoute);
+}
 </script>
 
 <template>

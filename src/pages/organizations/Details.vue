@@ -22,7 +22,7 @@ const name = ref<string>('');
 const businessRegNum = ref<string>('');
 const address = ref<string>('');
 const postcode = ref<string>('');
-const contactNum = ref<string>('010-1112223');
+const contactNum = ref<string>('');
 
 const path = computed(() => {
   const { path } = router.currentRoute.value;
