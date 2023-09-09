@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import Login from './pages/Login.vue';
 import Organizations from './pages/organizations/index.vue';
-import NewOrganization from './pages/organizations/new.vue';
+import OrganizationDetails from './pages/organizations/Details.vue';
 
 export const OrgRoute: RouteRecordRaw = {
   path: '/',
@@ -12,14 +12,14 @@ export const OrgRoute: RouteRecordRaw = {
 export const OrgDetailsRoute: RouteRecordRaw = {
   path: '/organizations/:id',
   name: 'Organization Details',
-  component: NewOrganization,
+  component: OrganizationDetails,
   props: true,
 };
 
 export const NewOrgRoute: RouteRecordRaw = {
   path: '/organizations/new',
   name: 'New Organization',
-  component: NewOrganization,
+  component: OrganizationDetails,
   props: false,
 };
 
