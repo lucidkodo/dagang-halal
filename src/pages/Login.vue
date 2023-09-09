@@ -35,6 +35,18 @@ async function onSubmit() {
     store.setCurrentUser(user);
 
     /**
+     * This step can be done in backend service if needed.
+     */
+    const userPermissions = await api.permissions.getByUserId(user.id);
+    if (userPermissions === undefined) {
+      // some error handling here
+      console.log('Error getting user permissions.');
+      return;
+    }
+
+    store.setCurrentUserPermissions(userPermissions.permissions);
+
+    /**
      * With "const { currentUser } = store;",
      * we could dynamically read variable name using
      * Object.keys({ currentUser })[0]

@@ -117,7 +117,14 @@ const api = {
     },
     getById: async (userId: number): Promise<User | null | undefined> => {
       return mockUsers.find((u) => u.id === userId);
-    }
+    },
+  },
+  permissions: {
+    getByUserId: async (
+      userId: number
+    ): Promise<{ userId: number; permissions: string[] } | undefined> => {
+      return mockUserPermissions.find((p) => p.userId === userId);
+    },
   },
   organization: {
     getAll: async (): Promise<Organization[]> => {
