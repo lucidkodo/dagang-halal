@@ -36,7 +36,7 @@ function getUserFromLocalStorage(): User | null {
 // redirect to login page if user data exists
 const localStorageUser = getUserFromLocalStorage();
 if (currentUser.value === null && localStorageUser === null) {
-  router.push(LoginRoute);
+  // router.push(LoginRoute);
 }
 
 // assign user to store

@@ -6,6 +6,12 @@ import { LoginRoute, NewOrgRoute, OrgRoute } from '../routes';
 
 const store = useCurrentUserStore();
 const router = useRouter();
+
+// action can also be hard coded into the component
+const canCreate = computed(() => {
+  return store.currentUser?.permissions?.includes('Organization.Create');
+});
+
 const pageTitle = computed(() => {
   return router.currentRoute.value.name;
 });
@@ -33,7 +39,13 @@ function logout() {
       </li>
     </ul>
     <div class="btnControl">
-      <q-btn no-caps icon="add" color="green" @click="goToNewOrgPage">
+      <q-btn
+        no-caps
+        icon="add"
+        color="green"
+        :disable="!canCreate"
+        @click="goToNewOrgPage"
+      >
         Add organization
       </q-btn>
       <q-btn no-caps color="grey" @click="logout">Logout</q-btn>

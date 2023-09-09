@@ -13,8 +13,13 @@ const store = useCurrentUserStore();
 // There isn't a "perfect" regex for checking email.
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-const email = ref<string>('');
-const password = ref<string>('');
+/**
+ * Logging in as tommy to test this demo.
+ * Because tommy only has "view" permission,
+ * so the buttons will be disabled.
+ */
+const email = ref<string>('tommydoe@email.com');
+const password = ref<string>('tommy12345');
 const loginFailed = ref<boolean>(false);
 
 async function onSubmit() {
@@ -33,6 +38,18 @@ async function onSubmit() {
     // password REALLY shouldn't be here
     // delete user.password;
     store.setCurrentUser(user);
+
+    /**
+     * This step can be done in backend service if needed.
+     */
+    const userPermissions = await api.permissions.getByUserId(user.id);
+    if (userPermissions === undefined) {
+      // some error handling here
+      console.log('Error getting user permissions.');
+      return;
+    }
+
+    store.setCurrentUserPermissions(userPermissions.permissions);
 
     /**
      * With "const { currentUser } = store;",
