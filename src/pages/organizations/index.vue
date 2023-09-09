@@ -28,7 +28,7 @@ const mockData = await fetchOrganizations();
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import * as dayjs from 'dayjs';
 import api from '../../../helpers/api';
@@ -39,6 +39,10 @@ const router = useRouter();
 const store = useOrganizationsStore();
 const { organizations } = storeToRefs(store);
 const userStore = useCurrentUserStore();
+
+// Capture error message as props passed from router
+const props = defineProps({ routeErrMsg: String });
+const routeErrorMsg = ref<string | undefined>(props.routeErrMsg);
 
 /**
  * Read available actions from route meta,
@@ -150,6 +154,12 @@ function deleteOrganization(orgId: number) {
 // use mock data when there's no data
 if (store.organizations.length === 0) {
   store.setOrganizations(mockData);
+}
+
+// display an alert when there's error message
+if (routeErrorMsg.value) {
+  alert(routeErrorMsg.value);
+  routeErrorMsg.value = '';
 }
 </script>
 
