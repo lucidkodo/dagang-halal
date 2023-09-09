@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useCurrentUserStore } from '../store';
 import { useRouter } from 'vue-router';
-import { LoginRoute } from '../routes';
+import { LoginRoute, NewOrgRoute, OrgRoute } from '../routes';
 
 const store = useCurrentUserStore();
 const router = useRouter();
@@ -22,7 +22,10 @@ function logout() {
     <div class="text-h5">{{ pageTitle || 'Page' }}</div>
     <ul>
       <li>
-        <router-link :to="'/'">Organizations</router-link>
+        <router-link :to="NewOrgRoute">Create new</router-link>
+      </li>
+      <li>
+        <router-link :to="OrgRoute">Organizations</router-link>
       </li>
     </ul>
     <div class="btnControl">
