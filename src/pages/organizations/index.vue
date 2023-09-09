@@ -1,9 +1,36 @@
+<script lang="ts">
+import { OrganizationWithCreatorName as Organization } from '../../../models/Organization';
+
+// fetch data and massage data for display
+async function fetchOrganizations(): Promise<Organization[]> {
+  const data = await api.organization.getAll();
+  const transformedData: Organization[] = data.map((org) => ({
+    ...org,
+    creatorName: '',
+  }));
+
+  /**
+   * Map creator data to the organizations.
+   * Can be optimized using SQL left join.
+   */
+  for (const org of transformedData) {
+    const creator = await api.user.getById(org.createBy);
+    if (creator) {
+      org.creatorName = `${creator.firstName} ${creator.lastName}`;
+    }
+  }
+
+  return transformedData;
+}
+
+const mockData = await fetchOrganizations();
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import * as dayjs from 'dayjs';
 import api from '../../../helpers/api';
 import { useOrganizationsStore } from '../../store';
-import { OrganizationWithCreatorName as Organization } from '../../../models/Organization';
 
 const store = useOrganizationsStore();
 
@@ -27,7 +54,7 @@ const columns = [
     format: formatAddress,
   },
   {
-    label: 'Created by',
+    label: 'Create By',
     name: 'creatorName',
     align: 'left',
   },
@@ -74,25 +101,10 @@ const rows = computed(() => {
   return store.organizations;
 });
 
-// fetch data
-const data = await api.organization.getAll();
-const transformedData: Organization[] = data.map((org) => ({
-  ...org,
-  creatorName: '',
-}));
-
-/**
- * Map creator data to the organizations.
- * Can be optimized using SQL left join.
- */
-for (const org of transformedData) {
-  const creator = await api.user.getById(org.createBy);
-  if (creator) {
-    org.creatorName = `${creator.firstName} ${creator.lastName}`;
-  }
+// use mock data when there's no data
+if (store.organizations.length === 0) {
+  store.setOrganizations(mockData);
 }
-
-store.setOrganizations(transformedData);
 </script>
 
 <template>
@@ -104,7 +116,9 @@ store.setOrganizations(transformedData);
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
             <b>{{ col.label }}</b>
           </q-th>
-          <q-th class="text-left">Actions</q-th>
+          <q-th class="text-left">
+            <b>Actions</b>
+          </q-th>
         </q-tr>
       </template>
       <template v-slot:body="props">
