@@ -8,6 +8,18 @@ export const OrgRoute: RouteRecordRaw = {
   path: '/',
   name: 'Organizations',
   component: Organizations,
+  meta: {
+    /**
+     * This array stores all the actions
+     * that can be performed on the page.
+     */
+    pageActions: [
+      'Organization.View',
+      'Organization.Create',
+      'Organization.Modify',
+      'Organization.Delete',
+    ] as string[],
+  },
   /**
    * Utilize the beforeEnter hook to check the store for sessions,
    * and redirect users when there's no session.

@@ -32,12 +32,35 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import * as dayjs from 'dayjs';
 import api from '../../../helpers/api';
-import { useOrganizationsStore } from '../../store';
+import { useOrganizationsStore, useCurrentUserStore } from '../../store';
 import { OrgDetailsRoute } from '../../routes';
 
 const router = useRouter();
 const store = useOrganizationsStore();
 const { organizations } = storeToRefs(store);
+const userStore = useCurrentUserStore();
+
+/**
+ * Read available actions from route meta,
+ * and perform additional logic if needed.
+ */
+// const { pageActions } = router.currentRoute.value.meta as {
+//   pageActions: string[];
+// };
+// const editAction = pageActions.find(
+//   (action) => action === 'Organization.Modify'
+// );
+// const deleteAction = pageActions.find(
+//   (action) => action === 'Organization.Delete'
+// );
+
+const canEdit = computed(() => {
+  return userStore.currentUser?.permissions?.includes('Organization.Modify');
+});
+
+const canDelete = computed(() => {
+  return userStore.currentUser?.permissions?.includes('Organization.Delete');
+});
 
 // table column options
 const columns = [
@@ -157,11 +180,13 @@ if (store.organizations.length === 0) {
             <q-icon
               name="edit"
               class="edit"
+              :disabled="!canEdit"
               @click="goToDetailsPage(props.row)"
             />
             <q-icon
               name="delete"
               class="delete"
+              :disabled="!canDelete"
               @click="deleteOrganization(props.row.id)"
             />
           </q-td>

@@ -13,8 +13,13 @@ const store = useCurrentUserStore();
 // There isn't a "perfect" regex for checking email.
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-const email = ref<string>('');
-const password = ref<string>('');
+/**
+ * Logging in as tommy to test this demo.
+ * Because tommy only has "view" permission,
+ * so the buttons will be disabled.
+ */
+const email = ref<string>('tommydoe@email.com');
+const password = ref<string>('tommy12345');
 const loginFailed = ref<boolean>(false);
 
 async function onSubmit() {
