@@ -8,6 +8,14 @@ export const OrgRoute: RouteRecordRaw = {
   name: 'Organizations',
   component: Organizations,
 };
+
+export const OrgDetailsRoute: RouteRecordRaw = {
+  path: '/organizations/:id',
+  name: 'Organization Details',
+  component: NewOrganization,
+  props: true,
+};
+
 export const NewOrgRoute: RouteRecordRaw = {
   path: '/organizations/new',
   name: 'New Organization',

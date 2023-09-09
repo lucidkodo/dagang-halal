@@ -27,12 +27,17 @@ const mockData = await fetchOrganizations();
 </script>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import * as dayjs from 'dayjs';
 import api from '../../../helpers/api';
 import { useOrganizationsStore } from '../../store';
+import { OrgDetailsRoute } from '../../routes';
 
+const router = useRouter();
 const store = useOrganizationsStore();
+const { organizations } = storeToRefs(store);
 
 // table column options
 const columns = [
@@ -98,8 +103,15 @@ function renderValue(row: Organization, col: keyof Organization) {
 
 // set up rows to be a computed value of state value
 const rows = computed(() => {
-  return store.organizations;
+  return organizations.value;
 });
+
+function goToDetailsPage(row: Organization) {
+  router.push({
+    ...OrgDetailsRoute,
+    params: { id: row.id },
+  });
+}
 
 // use mock data when there's no data
 if (store.organizations.length === 0) {
@@ -131,9 +143,11 @@ if (store.organizations.length === 0) {
             {{ renderValue(props.row, col) }}
           </q-td>
           <q-td class="actionBtns">
-            <a :href="'#edit-' + props.row.id">
-              <q-icon name="edit" class="edit" />
-            </a>
+            <q-icon
+              name="edit"
+              class="edit"
+              @click="goToDetailsPage(props.row)"
+            />
             <a :href="'#delete-' + props.row.id">
               <q-icon name="delete" class="delete" />
             </a>
